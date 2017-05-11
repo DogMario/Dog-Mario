@@ -9,9 +9,24 @@ public class Boundary {
 
 public class PlayerController : MonoBehaviour {
 
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     public float speed;
     public Boundary boundary;
+    //public float jumpHeight;
+    public float maxJumpHeight = 4;
+    public float minJumpHeight = 1;
+    public float timeToJumpApex = .4f;
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
+
+    float gravity;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+    Vector2 velocity;
+    float velocityXSmoothing;
+
+
+    //private bool jumping;
     /*private AudioSource audiosource;
     private GameController gameController;
     
@@ -24,8 +39,12 @@ public class PlayerController : MonoBehaviour {
     }
     */
     void Start() {
-        rb = GetComponent<Rigidbody>();
-       // audiosource = GetComponent<AudioSource>(); 
+        rb = GetComponent<Rigidbody2D>();
+        // audiosource = GetComponent<AudioSource>(); 
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+        print("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
     }
 
     /*void Update() {
@@ -47,15 +66,33 @@ public class PlayerController : MonoBehaviour {
         } 
     }*/
 
-	void FixedUpdate () {
+    void Update() {
+        /*if (rb.velocity.y == 0f && !jumping && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))) {
+
+        }*/
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            velocity.y = maxJumpVelocity;
+        }
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            if (velocity.y > minJumpVelocity) {
+                velocity.y = minJumpVelocity;
+            }
+        }
+
+
+        velocity.y += gravity * Time.deltaTime;
+        //controller.Move(velocity * Time.deltaTime, input);
+    }
+
+        void FixedUpdate () {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0f);
-        rb.velocity = movement * speed;
-
-        rb.position = new Vector3(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),  
-                                    Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax), 0);
+        //Vector2 movement = new Vector2(moveHorizontal, 0f);
+        rb.velocity = new Vector2(moveHorizontal * speed, 0);
+        
+        rb.position = new Vector2(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),  
+                                    Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax ));
 
         //rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
     }
