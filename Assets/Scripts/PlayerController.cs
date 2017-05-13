@@ -45,4 +45,13 @@ public class PlayerController : PhysicsObject {
 
         targetVelocity = move * maxSpeed;
     }
+
+	//this function kills the player if player collides with anything with the 'KillPlayer' tag
+	//for now, testing purposes reloads the level
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "KillPlayer") {
+			Debug.Log ("Dead!"); //print Dead! in console -> for testing purposes
+			Application.LoadLevel("Level 1"); //load level 1 for now
+		}
+	}
 }
