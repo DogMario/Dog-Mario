@@ -20,7 +20,7 @@ public class ObjectAlive : MonoBehaviour {
 	}
 
 	public void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.gameObject.tag == "Spikes")
+		if (coll.gameObject.tag == "KillPlayer")
 			alive = false;
 	}
 }
