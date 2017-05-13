@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.SerializableAttribute]
 public class Boundary {
@@ -51,7 +52,15 @@ public class PlayerController : PhysicsObject {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "KillPlayer") {
 			Debug.Log ("Dead!"); //print Dead! in console -> for testing purposes
-			Application.LoadLevel("Level 1"); //load level 1 for now
+			SceneManager.LoadScene("Level 1"); //load level 1 for now
 		}
 	}
+
+    public bool isGrounded() {
+        return grounded;
+    }
+
+    public Vector3 getSpeed() {
+        return velocity;
+    }
 }
