@@ -16,6 +16,8 @@ public class PlayerController : PhysicsObject {
     private SpriteRenderer spriteRenderer;
     private GameObject feet;
     private GameObject head;
+    private MusicManager musicManager;
+    private bool dead;
     //private Animator animator;
 
     // Use this for initialization
@@ -23,6 +25,7 @@ public class PlayerController : PhysicsObject {
         spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");
+        musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         //animator = GetComponent<Animator>();
     }
 
@@ -57,17 +60,21 @@ public class PlayerController : PhysicsObject {
         }
     }
 
-	//this function kills the player if player collides with anything with the 'KillPlayer' tag
-	//for now, testing purposes reloads the level
-	/*void OnTriggerEnter2D(Collider2D other) {
-		if (tag == "Player" && other.tag == "KillPlayer") {
-			Debug.Log ("Dead!"); //print Dead! in console -> for testing purposes
-			SceneManager.LoadScene("Level 1"); //load level 1 for now
-		}
-	}*/
-
     public void Die() {
-        Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
+        if (!dead) {
+            Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
+            dead = true;
+            StartCoroutine(PlayDeath());
+            //play death animation here or call StartCoroutine(some IENumerator function that waits for animation.clip.length)
+        }
+        
+    }
+
+    IEnumerator PlayDeath() {
+        //anim.setTrigger(dead) OR deathAnimation.Play() depending on using animator or animation
+        musicManager.playDead();
+        yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
+        StaticLives.lives--;
         SceneManager.LoadScene("Level 1"); //load level 1 for now
     }
 
