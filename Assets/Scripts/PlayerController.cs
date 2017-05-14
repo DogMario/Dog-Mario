@@ -16,7 +16,6 @@ public class PlayerController : PhysicsObject {
     private SpriteRenderer spriteRenderer;
     private GameObject feet;
     private GameObject head;
-    //private Lives livesScript;
     //private Animator animator;
 
     // Use this for initialization
@@ -24,7 +23,6 @@ public class PlayerController : PhysicsObject {
         spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");
-        //livesScript = GameObject.Find("Canvas").GetComponentInChildren<Lives>();
         //animator = GetComponent<Animator>();
     }
 
@@ -61,27 +59,16 @@ public class PlayerController : PhysicsObject {
 
 	//this function kills the player if player collides with anything with the 'KillPlayer' tag
 	//for now, testing purposes reloads the level
-	void OnTriggerEnter2D(Collider2D other) {
+	/*void OnTriggerEnter2D(Collider2D other) {
 		if (tag == "Player" && other.tag == "KillPlayer") {
 			Debug.Log ("Dead!"); //print Dead! in console -> for testing purposes
 			SceneManager.LoadScene("Level 1"); //load level 1 for now
 		}
-	}
+	}*/
 
     public void Die() {
-<<<<<<< HEAD
-        Debug.Log("Dead!"); //print Dead! in console -> for testing purposes
-        //SceneManager.LoadScene("Level 1"); //load level 1 for now
-=======
-        StartCoroutine(WaitAndDie(1.0f));
-    }
-
-    IEnumerator WaitAndDie(float waitTime) {
-        yield return new WaitForSeconds(waitTime);
-        StaticLives.lives--;
-        Debug.Log("Dead!" + StaticLives.lives); //print Dead! in console -> for testing purposes
+        Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
         SceneManager.LoadScene("Level 1"); //load level 1 for now
->>>>>>> 222d580474b6cdb9ba9a9f63195dc5423680f9b0
     }
 
     public bool isGrounded() {

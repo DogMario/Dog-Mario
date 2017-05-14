@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
+	public KillPlayer killPlayer; //KillPlayer script
     public bool move1Way;
     public bool moveLeft = true;
     public float speed;
@@ -14,6 +15,7 @@ public class EnemyController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+ //calls script to kill player
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         if (!move1Way) {
@@ -27,12 +29,9 @@ public class EnemyController : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "DogFeet") {
-            Die();
-        }
-        else if(other.tag == "Player" && tag == "KillPlayer") {
-            other.GetComponentInParent<PlayerController>().Die();
-        }
+		if (other.tag == "DogFeet") {
+			Die ();
+		} 
     }
 
     void Die() {
