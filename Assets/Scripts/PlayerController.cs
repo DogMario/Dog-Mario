@@ -59,16 +59,16 @@ public class PlayerController : PhysicsObject {
 
 	//this function kills the player if player collides with anything with the 'KillPlayer' tag
 	//for now, testing purposes reloads the level
-	/*void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerEnter2D(Collider2D other) {
 		if (tag == "Player" && other.tag == "KillPlayer") {
 			Debug.Log ("Dead!"); //print Dead! in console -> for testing purposes
 			SceneManager.LoadScene("Level 1"); //load level 1 for now
 		}
-	}*/
+	}
 
     public void Die() {
         Debug.Log("Dead!"); //print Dead! in console -> for testing purposes
-        SceneManager.LoadScene("Level 1"); //load level 1 for now
+        //SceneManager.LoadScene("Level 1"); //load level 1 for now
     }
 
     public bool isGrounded() {
