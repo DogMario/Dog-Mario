@@ -30,12 +30,15 @@ public class EnemyController : MonoBehaviour {
         if(other.tag == "DogFeet") {
             Die();
         }
+        else if(other.tag == "Player" && tag == "KillPlayer") {
+            other.GetComponentInParent<PlayerController>().Die();
+        }
     }
 
     void Die() {
         isDead = true;
         anim.SetTrigger("Dead");
-        
+        tag = "Untagged";
         //GetComponent<Rigidbody2D>().gravityScale = 0f;
         //GetComponent<Collider2D>().isTrigger = true;
         Destroy(gameObject, 1.1f);
