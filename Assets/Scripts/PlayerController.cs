@@ -16,6 +16,7 @@ public class PlayerController : PhysicsObject {
     private SpriteRenderer spriteRenderer;
     private GameObject feet;
     private GameObject head;
+    //private Lives livesScript;
     //private Animator animator;
 
     // Use this for initialization
@@ -23,6 +24,7 @@ public class PlayerController : PhysicsObject {
         spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");
+        //livesScript = GameObject.Find("Canvas").GetComponentInChildren<Lives>();
         //animator = GetComponent<Animator>();
     }
 
@@ -67,7 +69,13 @@ public class PlayerController : PhysicsObject {
 	}*/
 
     public void Die() {
-        Debug.Log("Dead!"); //print Dead! in console -> for testing purposes
+        StartCoroutine(WaitAndDie(1.0f));
+    }
+
+    IEnumerator WaitAndDie(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+        StaticLives.lives--;
+        Debug.Log("Dead!" + StaticLives.lives); //print Dead! in console -> for testing purposes
         SceneManager.LoadScene("Level 1"); //load level 1 for now
     }
 
