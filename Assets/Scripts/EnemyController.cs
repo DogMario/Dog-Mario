@@ -15,7 +15,6 @@ public class EnemyController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
- //calls script to kill player
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         if (!move1Way) {
