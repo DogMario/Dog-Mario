@@ -12,13 +12,13 @@ public class EnemyController : MonoBehaviour {
     Rigidbody2D rb2D;
     Animator anim;
     bool isDead;
-    float startTime;
-    float bufferTimeStart = 0f;
-    float threshold = 0.03f;
-    bool justChanged;
-    bool timeStarted;
-    Vector3 offset;
-    Vector3 lastPos;
+    //float startTime;
+    //float bufferTimeStart = 0f;
+    //float threshold = 0.03f;
+    //bool justChanged;
+    //bool timeStarted;
+    //Vector3 offset;
+    //Vector3 lastPos;
 
     // Use this for initialization
     void Start () {
@@ -27,8 +27,8 @@ public class EnemyController : MonoBehaviour {
         if (!move1Way) {
             StartCoroutine(RandomMovement());
         }
-        startTime = Time.time;
-        lastPos = transform.position;
+        //startTime = Time.time;
+        //lastPos = transform.position;
     }
 	
 	// Update is called once per frame
