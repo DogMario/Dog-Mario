@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[System.SerializableAttribute]
-public class Boundary {
-    public float xMin, xMax, yMin, yMax;
-}
-
 public class PlayerController : PhysicsObject {
 
     public float maxSpeed = 7;
