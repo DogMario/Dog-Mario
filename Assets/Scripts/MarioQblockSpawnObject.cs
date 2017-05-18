@@ -35,12 +35,14 @@ public class MarioQblockSpawnObject : MonoBehaviour {
         }
         if (c.tag == "DogHead" && !broken && c.transform.position.y < transform.position.y - 0.2f && !entered) {
             GetComponent<BoxCollider2D>().enabled = true;
-            anim.SetTrigger("Broke");
-
             anim.SetBool("Invis", false);
+            anim.SetTrigger("Broke");
+            
+
             if (objectToSpawn != null) {
                 Instantiate(objectToSpawn, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
             }
+
             broken = true;
         }
     }

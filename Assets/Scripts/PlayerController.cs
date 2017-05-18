@@ -13,7 +13,7 @@ public class PlayerController : PhysicsObject {
     private GameObject head;
     private MusicManager musicManager;
     private bool dead;
-    //private Animator animator;
+    private Animator animator;
 
     // Use this for initialization
     void Awake() {
@@ -21,37 +21,42 @@ public class PlayerController : PhysicsObject {
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");
         musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     protected override void ComputeVelocity() {
-        Vector2 move = Vector2.zero;
+        if (!dead) {
+            Vector2 move = Vector2.zero;
 
-        move.x = Input.GetAxis("Horizontal");
+            move.x = Input.GetAxis("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && grounded) {
-            velocity.y = jumpTakeOffSpeed;
-        }
-        else if (Input.GetButtonUp("Jump")) {
-            if (velocity.y > 0) {
-                velocity.y = velocity.y * 0.5f;
+            if (Input.GetButtonDown("Jump") && grounded) {
+                velocity.y = jumpTakeOffSpeed;
             }
-        }
+            else if (Input.GetButtonUp("Jump")) {
+                if (velocity.y > 0) {
+                    velocity.y = velocity.y * 0.5f;
+                }
+            }
 
-        bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
-        if (flipSprite) {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-            feet.transform.rotation = Quaternion.Euler(0f, (Mathf.Round(feet.transform.rotation.y) == 1 ? 0f : 180f), 0);
-            head.transform.rotation = Quaternion.Euler(0f, (Mathf.Round(head.transform.rotation.y) == 1 ? 0f : 180f), 0);
-        }
+            bool flipSprite = (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? (move.x > 0.1f) : (move.x < -0.1f));
+            if (flipSprite) {
+                transform.rotation = Quaternion.Euler(0f, (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? 0f : 180f), 0);
+            }
 
-        //animator.SetBool("grounded", grounded);
-        //animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+            //if dw play move animation, add (grounded) into condition
+            if (Mathf.Abs(velocity.x) > 0.01f) {
+                animator.SetBool("isMoving", true);
+            }
+            else {
+                animator.SetBool("isMoving", false);
+            }
 
-        targetVelocity = move * maxSpeed;
+            targetVelocity = move * maxSpeed;
 
-        if(transform.position.y < -5.0f) {
-            Die();
+            if (transform.position.y < -5.0f) {  //drop to death
+                Die();
+            }
         }
     }
 
@@ -59,14 +64,14 @@ public class PlayerController : PhysicsObject {
         if (!dead) {
             Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
             dead = true;
+            rb2d.velocity.Set(0f, 0f);
             StartCoroutine(PlayDeath());
-            //play death animation here or call StartCoroutine(some IENumerator function that waits for animation.clip.length)
         }
         
     }
 
     IEnumerator PlayDeath() {
-        //anim.setTrigger(dead) OR deathAnimation.Play() depending on using animator or animation
+        animator.SetTrigger("dead");
         musicManager.playDead();
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
