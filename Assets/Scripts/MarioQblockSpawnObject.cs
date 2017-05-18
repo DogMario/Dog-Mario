@@ -10,11 +10,14 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     bool broken;
     bool entered;
     SpriteRenderer[] sprites;
-    Vector3 startPosition;
     bool moved;
+    EdgeCollider2D ec2D;
 
     void Awake() {
- 
+        ec2D = GetComponent<EdgeCollider2D>();
+        if (invisible) {
+            ec2D.isTrigger = false;
+        }
     }
 
 	// Use this for initialization
@@ -24,19 +27,13 @@ public class MarioQblockSpawnObject : MonoBehaviour {
             GetComponent<BoxCollider2D>().enabled = false;
             anim.SetBool("Invis", true);
         }
-        startPosition = transform.position;
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
     void OnTriggerEnter2D(Collider2D c) {
         if (c.tag == "DogFeet" || c.tag == "Player") {
             entered = true;
         }
         if (c.tag == "DogHead" && !broken && c.transform.position.y < transform.position.y - 0.2f && !entered) {
-            Debug.Log("head hit below");
             GetComponent<BoxCollider2D>().enabled = true;
             anim.SetTrigger("Broke");
 
