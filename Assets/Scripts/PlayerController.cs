@@ -8,9 +8,9 @@ public class PlayerController : PhysicsObject {
     public float maxSpeed = 7;
     public float jumpTakeOffSpeed = 20;
 
-    private SpriteRenderer spriteRenderer;
+    /*private SpriteRenderer spriteRenderer;
     private GameObject feet;
-    private GameObject head;
+    private GameObject head;*/
     private MusicManager musicManager;
     private bool dead;
     private Animator animator;
@@ -18,9 +18,9 @@ public class PlayerController : PhysicsObject {
 
     // Use this for initialization
     void Awake() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        /*spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
-        head = GameObject.Find("Head Collider");
+        head = GameObject.Find("Head Collider");*/
         musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         animator = GetComponent<Animator>();
     }

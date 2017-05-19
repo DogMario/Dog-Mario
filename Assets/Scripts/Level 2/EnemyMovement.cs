@@ -6,38 +6,35 @@ public class EnemyMovement : MonoBehaviour {
 
     public int movementPattern = 1;
     public float speed;
-
+    public int convergePoint = 1;
+    public int convergeDist = 4;
+    public static Object prefab;
     private Rigidbody2D rb;
     Vector2 startPos;
+
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         startPos = new Vector2(transform.position.x, transform.position.y);
     }
 
-    // Use this for initialization
-    void Start () {
-        //Move(movementPattern);
-	}
-
-
-    void Move(int movementPattern) {
-        
+    public void CreateWith(int value) { //Converge point, converge dist, movement pattern, speed, speed
+        this.speed = (float)(value % 100);
+        movementPattern = (value / 100) % 10;
+        if (value / 1000 != 0) {
+            convergeDist = (value / 1000) % 10;
+            convergePoint = value / 10000;
+        }
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
     void FixedUpdate() {
         switch (movementPattern) {
-            case 1:
-                if (rb.transform.position.x > 4f) {
+            case 1: //_,-
+                if (rb.transform.position.x > convergePoint + convergeDist) {
                     rb.velocity = speed * Vector2.left;
                 }
-                else if(rb.transform.position.x > -3f) {
-                    rb.velocity = speed * new Vector2(-0.75f, (-startPos.y / 5.25f));
+                else if(rb.transform.position.x > convergePoint - convergeDist) {
+                    rb.velocity = speed * new Vector2(-0.75f, (-startPos.y / (2*convergeDist)));
                 }
                 else {
                     rb.velocity = speed * Vector2.left;
