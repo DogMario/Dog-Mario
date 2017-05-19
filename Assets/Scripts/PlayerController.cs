@@ -14,6 +14,7 @@ public class PlayerController : PhysicsObject {
     private MusicManager musicManager;
     private bool dead;
     private Animator animator;
+    private bool reachedFlag;
 
     // Use this for initialization
     void Awake() {
@@ -26,36 +27,55 @@ public class PlayerController : PhysicsObject {
 
     protected override void ComputeVelocity() {
         if (!dead) {
-            Vector2 move = Vector2.zero;
+            if (!reachedFlag) {
+                Vector2 move = Vector2.zero;
 
-            move.x = Input.GetAxis("Horizontal");
+                move.x = Input.GetAxis("Horizontal");
 
-            if (Input.GetButtonDown("Jump") && grounded) {
-                velocity.y = jumpTakeOffSpeed;
-            }
-            else if (Input.GetButtonUp("Jump")) {
-                if (velocity.y > 0) {
-                    velocity.y = velocity.y * 0.5f;
+                if (Input.GetButtonDown("Jump") && grounded) {
+                    velocity.y = jumpTakeOffSpeed;
+                }
+                else if (Input.GetButtonUp("Jump")) {
+                    if (velocity.y > 0) {
+                        velocity.y = velocity.y * 0.5f;
+                    }
+                }
+
+                bool flipSprite = (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? (move.x > 0.1f) : (move.x < -0.1f));
+                if (flipSprite) {
+                    transform.rotation = Quaternion.Euler(0f, (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? 0f : 180f), 0);
+                }
+
+                //if dw play move animation, add (grounded) into condition
+                if (Mathf.Abs(velocity.x) > 0.01f) {
+                    animator.SetBool("isMoving", true);
+                }
+                else {
+                    animator.SetBool("isMoving", false);
+                }
+
+                targetVelocity = move * maxSpeed;
+
+                if (transform.position.y < -5.0f) {  //drop to death
+                    Die();
                 }
             }
-
-            bool flipSprite = (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? (move.x > 0.1f) : (move.x < -0.1f));
-            if (flipSprite) {
-                transform.rotation = Quaternion.Euler(0f, (Mathf.Abs(Mathf.Round(transform.rotation.y)) == 1 ? 0f : 180f), 0);
-            }
-
-            //if dw play move animation, add (grounded) into condition
-            if (Mathf.Abs(velocity.x) > 0.01f) {
-                animator.SetBool("isMoving", true);
-            }
             else {
-                animator.SetBool("isMoving", false);
-            }
-
-            targetVelocity = move * maxSpeed;
-
-            if (transform.position.y < -5.0f) {  //drop to death
-                Die();
+                if (!grounded) {
+                    velocity.x = 0;
+                    velocity.y = -2;
+                }
+                else {
+                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    if (transform.rotation.y == 1) {
+                        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    }
+                    velocity.y = 0;
+                    targetVelocity = new Vector2(2f,0f);
+                }
+                if (transform.position.y < -5.0f) {  //drop to death
+                    Die();
+                }
             }
         }
     }
@@ -80,6 +100,10 @@ public class PlayerController : PhysicsObject {
 
     public bool isGrounded() {
         return grounded;
+    }
+
+    public void ReachFlag() {
+        reachedFlag = true;
     }
 
     public Vector3 getSpeed() {
