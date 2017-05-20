@@ -8,7 +8,6 @@ public class EnemyMovement : MonoBehaviour {
     public float speed;
     public int convergePoint = 1;
     public int convergeDist = 4;
-    public static Object prefab;
     private Rigidbody2D rb;
     Vector2 startPos;
 
@@ -25,6 +24,16 @@ public class EnemyMovement : MonoBehaviour {
             convergeDist = (value / 1000) % 10;
             convergePoint = value / 10000;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "DogFeet") {
+            Die();
+        }
+    }
+
+    public void Die() {
+        Destroy(gameObject);
     }
 
     void FixedUpdate() {
