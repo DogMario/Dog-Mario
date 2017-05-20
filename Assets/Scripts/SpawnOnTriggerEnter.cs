@@ -23,9 +23,11 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
             
             GameObject enemyGO = (GameObject) Instantiate(enemy, spawnPoint, Quaternion.identity);
             enemyController = enemyGO.GetComponent<EnemyController>();
-            enemyController.move1Way = move1Way;
-            enemyController.moveLeft = moveLeft;
-            enemyController.speed = speed;
+            if (enemyController != null) {
+                enemyController.move1Way = move1Way;
+                enemyController.moveLeft = moveLeft;
+                enemyController.speed = speed;
+            }
             /*enemy.transform.position = spawnPoint;
             enemy.SetActive(true);*/
             triggered = true;
