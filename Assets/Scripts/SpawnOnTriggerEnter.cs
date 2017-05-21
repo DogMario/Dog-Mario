@@ -12,9 +12,10 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
     public float speed;
 
     EnemyController enemyController;
+    AudioSource spawnSound;
 
     void Awake() {
-
+        spawnSound = GetComponent<AudioSource>();
 
     }
    
@@ -22,6 +23,9 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
         if (other.tag == "Player" && !triggered) {
             
             GameObject enemyGO = (GameObject) Instantiate(enemy, spawnPoint, Quaternion.identity);
+            if (spawnSound != null) {
+                spawnSound.Play();
+            }
             enemyController = enemyGO.GetComponent<EnemyController>();
             if (enemyController != null) {
                 enemyController.move1Way = move1Way;

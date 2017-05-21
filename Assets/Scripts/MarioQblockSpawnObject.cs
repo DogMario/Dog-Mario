@@ -12,12 +12,14 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     SpriteRenderer[] sprites;
     bool moved;
     EdgeCollider2D ec2D;
+    AudioSource getHit;
 
     void Awake() {
         ec2D = GetComponent<EdgeCollider2D>();
         if (invisible) {
             ec2D.isTrigger = false;
         }
+        getHit = GetComponent<AudioSource>();
     }
 
 	// Use this for initialization
@@ -35,6 +37,7 @@ public class MarioQblockSpawnObject : MonoBehaviour {
         }
         if (c.tag == "DogHead" && !broken && c.transform.position.y < transform.position.y - 0.2f && !entered) {
             GetComponent<BoxCollider2D>().enabled = true;
+            getHit.Play();
             anim.SetBool("Invis", false);
             anim.SetTrigger("Broke");
             

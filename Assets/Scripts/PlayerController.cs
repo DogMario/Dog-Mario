@@ -15,6 +15,7 @@ public class PlayerController : PhysicsObject {
     private bool dead;
     private Animator animator;
     private bool reachedFlag;
+    private AudioSource bork;
 
     // Use this for initialization
     void Awake() {
@@ -23,6 +24,7 @@ public class PlayerController : PhysicsObject {
         head = GameObject.Find("Head Collider");*/
         musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         animator = GetComponent<Animator>();
+        bork = GetComponent<AudioSource>();
     }
 
     protected override void ComputeVelocity() {
@@ -34,6 +36,7 @@ public class PlayerController : PhysicsObject {
 
                 if (Input.GetButtonDown("Jump") && grounded) {
                     velocity.y = jumpTakeOffSpeed;
+                    bork.Play();
                 }
                 else if (Input.GetButtonUp("Jump")) {
                     if (velocity.y > 0) {

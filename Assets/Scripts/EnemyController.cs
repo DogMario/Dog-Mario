@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
-
-	public KillPlayer killPlayer; //KillPlayer script
+    
     public bool move1Way;
     public bool moveLeft = true;
     public float speed;
-    //public AudioClip deathClip;
     Rigidbody2D rb2D;
     Animator anim;
     bool isDead;
+    AudioSource getHit;
     //float startTime;
     //float bufferTimeStart = 0f;
     //float threshold = 0.03f;
@@ -24,6 +23,7 @@ public class EnemyController : MonoBehaviour {
     void Start () {
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
+        getHit = GetComponent<AudioSource>();
         if (!move1Way) {
             StartCoroutine(RandomMovement());
         }
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(transform.position.y < -8.0f) {
+        if(transform.position.y < -8.0f && !isDead) {
             Die();
         }
         /*if (move1Way && rb2D.velocity.magnitude < 1.5f && Time.time - startTime > 1.0f) {
@@ -75,8 +75,9 @@ public class EnemyController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "DogFeet") {
-			Die ();
+		if (other.tag == "DogFeet" && !isDead) {
+            getHit.Play();
+            Die ();
 		}
     }
 

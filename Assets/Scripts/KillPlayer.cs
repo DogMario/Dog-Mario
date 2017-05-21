@@ -5,7 +5,7 @@ using UnityEngine;
 public class KillPlayer : MonoBehaviour {
 
 	//Kills player if collision occurs
-	public void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerEnter2D(Collider2D other) {
 		if (tag == "KillPlayer" && (other.tag == "Player" || other.tag == "DogHead")) {
 			other.GetComponentInParent<PlayerController>().Die();
 		}
