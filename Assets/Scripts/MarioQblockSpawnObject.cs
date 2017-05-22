@@ -32,10 +32,10 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     }
 	
     void OnTriggerEnter2D(Collider2D c) {
-        if (c.tag == "DogFeet" || c.tag == "Player") {
+        /*if (c.tag == "DogFeet" || c.tag == "Player") {
             entered = true;
-        }
-        if (c.tag == "DogHead" && !broken && c.transform.position.y < transform.position.y - 0.2f && !entered) {
+        }*/
+        if (c.tag == "DogHead" && !broken && c.GetComponentInParent<Transform>().transform.position.y < transform.position.y - 0.2f && !entered) {
             GetComponent<BoxCollider2D>().enabled = true;
             getHit.Play();
             anim.SetBool("Invis", false);
@@ -55,12 +55,4 @@ public class MarioQblockSpawnObject : MonoBehaviour {
             entered = false;
         }
     }
-
-    /*void LateUpdate() {
-        if (broken && !moved) {
-            //transform.localPosition += new Vector3(startPosition.x, -startPosition.y,0f);
-            transform.localPosition += startPosition;
-            moved = true;
-        }
-    }*/
 }
