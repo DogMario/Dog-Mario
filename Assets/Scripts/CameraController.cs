@@ -39,11 +39,11 @@ public class CameraController : MonoBehaviour {
         }
         else if(player.transform.position.y < yValue - 8.0f) {
             yValue -= 8.0f;
-            yValue = Mathf.Max(1.0f, yValue);
+            yValue = Mathf.Max(3.5f, yValue);
         }
         else if(playerController.getSpeed().y < -4.0f) {
             yValue -= 1.0f;
-            yValue = Mathf.Max(1.0f, yValue);
+            yValue = Mathf.Max(3.5f, yValue);
         }
 	}
 

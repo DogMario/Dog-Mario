@@ -32,10 +32,10 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     }
 	
     void OnTriggerEnter2D(Collider2D c) {
-        /*if (c.tag == "DogFeet" || c.tag == "Player") {
+        if (c.tag == "DogFeet" || c.tag == "Player") {
             entered = true;
-        }*/
-        if (c.tag == "DogHead" && !broken && c.GetComponentInParent<Transform>().transform.position.y < transform.position.y - 0.2f && !entered) {
+        }
+        if (c.tag == "DogHead" && !broken && c.GetComponentInParent<Transform>().transform.position.y < transform.position.y - 1.0f && !entered) {
             GetComponent<BoxCollider2D>().enabled = true;
             getHit.Play();
             anim.SetBool("Invis", false);
