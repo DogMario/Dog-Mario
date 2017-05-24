@@ -22,9 +22,9 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
     Quaternion smirk = Quaternion.Euler(0, 0, 0);
     Quaternion thankful = Quaternion.Euler(0, 0, 120);
     Quaternion diao = Quaternion.Euler(0, 0, -120);
-    bool toSmirk;
-    bool toThankful;
-    bool toDiao;
+    public bool toSmirk;
+    public bool toThankful;
+    public bool toDiao;
     private float nextFire1 = 3f;
     private float nextFire2 = 3f;
     private float nextFire3 = 3f;
@@ -59,7 +59,7 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
         else if (toDiao){
             transform.rotation = Quaternion.Lerp(transform.rotation, diao, Time.deltaTime * speed);
         }
-	}
+    }
 
     IEnumerator Move() {
         while (true) {
@@ -75,6 +75,10 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
             toSmirk = false;
 
         }
+    }
+
+    IEnumerator Wait(float f) {
+        yield return new WaitForSeconds(f);
     }
 
     void FixedUpdate() {
