@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
-    
+
     public bool move1Way;
     public bool moveLeft = true;
-    public float speed;
+	public bool moveUp;
+
+	/* VARIABLES TO MAKE OBJECT STOP AFTER SOME DISTANCE
+	public float distance; //distance
+	public bool movesThenStops; //object will stop moving after a certain distance
+	protected float accumulatedDistance = 0;
+	Vector2 lastPosition;
+	*/
+
+	public float speed;
     Rigidbody2D rb2D;
     Animator anim;
     bool isDead;
@@ -21,6 +30,9 @@ public class EnemyController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		//lastPosition = transform.position;
+		//Debug.Log ("" + distance);
+
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         getHit = GetComponent<AudioSource>();
@@ -33,6 +45,8 @@ public class EnemyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
         if(transform.position.y < -8.0f && !isDead) {
             Die();
         }
@@ -100,30 +114,45 @@ public class EnemyController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (!isDead) {
-            if (move1Way) {
-                if (moveLeft) {
-                    rb2D.velocity = new Vector2(-speed, 0);
-                }
-                else {
-                    rb2D.velocity = new Vector2(speed, 0);
-                }
-                if (Mathf.Abs(rb2D.velocity.x) < speed) {
-                    if (rb2D.velocity.x < 0) {
-                        rb2D.velocity = new Vector2(-speed, 0);
-                    }
-                    else {
-                        rb2D.velocity = new Vector2(speed, 0);
-                    }
-                }
-            }
+	/*  accumulatedDistance += Vector2.Distance (transform.position, lastPosition);
+		lastPosition = transform.position;
+		Debug.Log ("" + accumulatedDistance);
+	
+		if (movesThenStops) {
+			if (accumulatedDistance >= distance) {
+				rb2D.velocity = new Vector2(0,0);
+				speed = 0;
+				isDead = true;
+			}
+		}
+	*/
+		
+		if (!isDead) {
+			if (move1Way) {
+				if (moveLeft && !moveUp) {
+					rb2D.velocity = new Vector2 (-speed, 0);
+				} else if (!moveLeft && !moveUp) {
+					rb2D.velocity = new Vector2 (speed, 0);
+				}
+				if (!moveUp && Mathf.Abs (rb2D.velocity.x) < speed) {
+					if (rb2D.velocity.x < 0) {
+						rb2D.velocity = new Vector2 (-speed, 0);
+					} else {
+						rb2D.velocity = new Vector2 (speed, 0);
+					}
+				} 
+				if (moveUp) {
+					rb2D.velocity = new Vector2 (0, speed);
+				}
+			}
 
-            if (Mathf.Abs(rb2D.velocity.x) > 0.1f) {
-                anim.SetBool("isMoving", true);
-            }
-            else {
-                anim.SetBool("isMoving", false);
-            }
-        }
+			if (Mathf.Abs (rb2D.velocity.x) > 0.1f) {
+				anim.SetBool ("isMoving", true);
+			} else {
+				anim.SetBool ("isMoving", false);
+			}
+		} 
+		
+		
     }
 }

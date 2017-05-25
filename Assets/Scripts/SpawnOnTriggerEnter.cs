@@ -8,8 +8,11 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
     public GameObject enemy;
     public bool triggered;
     public bool move1Way;
-    public bool moveLeft = true;
+    public bool moveLeft;
+	public bool moveUp;
+	//public bool movesThenStops;
     public float speed;
+	//public float distance;
 
     EnemyController enemyController;
     AudioSource spawnSound;
@@ -30,7 +33,9 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
             if (enemyController != null) {
                 enemyController.move1Way = move1Way;
                 enemyController.moveLeft = moveLeft;
+				enemyController.moveUp = moveUp;
                 enemyController.speed = speed;
+				//enemyController.distance = distance;
             }
             /*enemy.transform.position = spawnPoint;
             enemy.SetActive(true);*/
