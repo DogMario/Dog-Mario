@@ -11,10 +11,10 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
     public GameObject blueShot;
     public Transform shotSpawn2;
     public float fireRate2;
+    public GameObject greenLaser;
+    public Transform shotSpawn3;
+    public float fireRate3 = 10f;
     /*public GameObject shot;
-    public Transform shotSpawn;
-    public float fireRate;
-    public GameObject shot;
     public Transform shotSpawn;
     public float fireRate;*/
 
@@ -27,8 +27,9 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
     public bool toDiao;
     private float nextFire1 = 3f;
     private float nextFire2 = 3f;
-    private float nextFire3 = 3f;
+    private float nextFire3 = 8f;
     private float nextFire4 = 3f;
+    private float diaoStart = 0;
 
     // Use this for initialization
     void Start () {
@@ -46,6 +47,10 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
         if(toThankful && Time.time > nextFire2) {
             nextFire2 = Time.time + fireRate2;
             Instantiate(blueShot, shotSpawn2.position, shotSpawn2.rotation);
+        }
+        if(toDiao && Time.time > nextFire3 && Time.time > diaoStart + 1.5f) {
+            nextFire3 = Time.time + fireRate3;
+            Instantiate(greenLaser, shotSpawn3.position, shotSpawn3.rotation);
         }
 
 
@@ -68,6 +73,7 @@ public class FidgetBossMainMovementScript : MonoBehaviour {
             yield return new WaitForSeconds(5f);
             toThankful = false;
             toDiao = true;
+            diaoStart = Time.time;
             yield return new WaitForSeconds(5f);
             toDiao = false;
             toSmirk = true;

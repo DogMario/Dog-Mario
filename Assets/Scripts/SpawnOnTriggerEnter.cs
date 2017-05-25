@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnOnTriggerEnter : MonoBehaviour {
 
-    public Vector3 spawnPoint;
+    public Vector3 relativeSpawnPoint;
     public GameObject enemy;
     public bool triggered;
     public bool move1Way;
@@ -25,7 +25,7 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Player" && !triggered) {
             
-            GameObject enemyGO = (GameObject) Instantiate(enemy, spawnPoint, Quaternion.identity);
+            GameObject enemyGO = (GameObject) Instantiate(enemy, transform.position + relativeSpawnPoint, Quaternion.identity);
             if (spawnSound != null) {
                 spawnSound.Play();
             }
