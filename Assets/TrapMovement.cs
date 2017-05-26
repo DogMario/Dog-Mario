@@ -29,9 +29,13 @@ public class TrapMovement : MonoBehaviour {
 		lastPosition = transform.position;
 		rb2D = GetComponent<Rigidbody2D> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+
+	}
+
+	// Update is called once per frame
+	void FixedUpdate () {
 		accumulatedDistance += Vector2.Distance (transform.position, lastPosition);
 		lastPosition = transform.position;
 
@@ -46,6 +50,7 @@ public class TrapMovement : MonoBehaviour {
 		if (isMoving) {
 			if (left) {
 				rb2D.velocity = new Vector2 (-speed, 0);
+				Debug.Log ("" + speed);
 			}
 			if (right) {
 				rb2D.velocity = new Vector2 (speed, 0);
