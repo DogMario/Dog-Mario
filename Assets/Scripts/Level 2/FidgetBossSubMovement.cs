@@ -19,19 +19,24 @@ public class FidgetBossSubMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Time.time > nextRotation + rotationCD && (mainScript.toSmirk || mainScript.toThankful)) {
-            //if past cooldown, update cooldown time and set new target rotation
-            nextRotation = Time.time;
-            newRotation = Quaternion.Euler(0, 0, Random.Range(-55, 45));
+        if (mainScript.hp <= 0) {
+            newRotation = Quaternion.identity;
         }
-        if(Time.time > nextRotation + rotationCD && mainScript.toDiao) {
-        
-            
-            if (Time.time < mainScript.diaoStart + mainScript.laserDelay) {
-                newRotation = Quaternion.LookRotation(mainScript.player.transform.position - GetComponentInParent<Transform>().position) * Quaternion.Euler(0,0,-10);
+        else {
+            if (Time.time > nextRotation + rotationCD && (mainScript.toSmirk || mainScript.toThankful)) {
+                //if past cooldown, update cooldown time and set new target rotation
+                nextRotation = Time.time;
+                newRotation = Quaternion.Euler(0, 0, Random.Range(-55, 45));
             }
-            else {
-                
+            if (Time.time > nextRotation + rotationCD && mainScript.toDiao) {
+
+
+                if (Time.time < mainScript.diaoStart + mainScript.laserDelay - 0.5f) {
+                    newRotation = Quaternion.LookRotation(mainScript.player.transform.position - GetComponentInParent<Transform>().position) * Quaternion.Euler(0, 0, -10);
+                }
+                else {
+
+                }
             }
         }
         //slerp towards target rotation

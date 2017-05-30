@@ -8,16 +8,19 @@ public class WeaponController : MonoBehaviour {
     public Transform shotSpawn;
     public float fireRate;
     public float delay;
-
+    private EnemyMovement enemyMovement;
     //private AudioSource audiosource;
 
     void Start() {
         //audiosource = GetComponent<AudioSource>();
         InvokeRepeating("Fire", delay, fireRate);
+        enemyMovement = GetComponent<EnemyMovement>();
     }
 
     void Fire() {
-        Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-        //audiosource.Play();
+        if (!enemyMovement.isDead) {
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            //audiosource.Play();
+        }
     }
 }

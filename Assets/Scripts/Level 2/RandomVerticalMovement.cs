@@ -17,17 +17,17 @@ public class RandomVerticalMovement : MonoBehaviour {
 	
     IEnumerator Move() {
         yield return new WaitForSeconds(3f);
-        while(true) {
-            yield return new WaitForSeconds(1.0f);
+        while(!mainScript.isDead) {
+            yield return new WaitForSeconds(Random.Range(0.2f,0.8f));
             if (!mainScript.toDiao) {
                 rb2D.velocity = new Vector2(0, speed * (Random.Range(-1.0f, 1.0f) > 0 ? 1.0f : -1.0f));
-                yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
+                yield return new WaitForSeconds(Random.Range(1f, 2f));
             }
             rb2D.velocity = new Vector2(0, 0);
         }
     }
 	// Update is called once per frame
 	void FixedUpdate () {
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4, 5), transform.position.z);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4, 4), transform.position.z);
 	}
 }

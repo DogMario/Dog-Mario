@@ -13,6 +13,7 @@ public class Level2PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     public float speed = 5;
     public Boundary boundary;
+    public GameObject explosion;
     //private AudioSource audiosource;
     //private GameController gameController;
 
@@ -22,13 +23,9 @@ public class Level2PlayerController : MonoBehaviour {
     private float nextFire;
     private MusicManager musicManager;
     private bool dead;
+    private float randomYDrift;
 
     void Awake() {
-        /*gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        //gameController = new GameController();
-        if (gameController == null) {
-            Debug.Log("canot find gamecontroller script");
-        }*/
         musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
     }
 
@@ -39,7 +36,10 @@ public class Level2PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if((Input.GetButton("Fire1") || Input.GetKey(KeyCode.Space)) && Time.time > nextFire) {
+        if(StaticCheckpoint.checkpoint == 1) {
+            fireRate = 0.25f;
+        }
+        if(!dead && (Input.GetButton("Fire1") || Input.GetKey(KeyCode.Space)) && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
             //audiosource.Play();
@@ -50,6 +50,7 @@ public class Level2PlayerController : MonoBehaviour {
         if (!dead) {
             Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
             dead = true;
+            randomYDrift = Random.Range(-2f, 2f);
             StartCoroutine(PlayDeath());
             //play death animation here or call StartCoroutine(some IENumerator function that waits for animation.clip.length)
         }
@@ -58,20 +59,31 @@ public class Level2PlayerController : MonoBehaviour {
 
     IEnumerator PlayDeath() {
         //anim.setTrigger(dead) OR deathAnimation.Play() depending on using animator or animation
+        Instantiate(explosion, transform);
         musicManager.playDead();
+        transform.GetChild(1).gameObject.SetActive(false);
+        yield return new WaitForSeconds(1.0f);
+        GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
-        SceneManager.LoadScene("Level 2"); //load level 1 for now
+        SceneManager.LoadScene("Level 2"); //reload lv2
     }
 
     void FixedUpdate () {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        if (!dead) {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-        rb.velocity = movement * speed;
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+            rb.velocity = movement * speed;
 
-        rb.position = new Vector2(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),  
-                                    Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax));      
+            rb.position = new Vector2(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
+                                        Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax));
+        }
+        else {
+            rb.velocity = new Vector2(-3, randomYDrift);
+            rb.position = new Vector2(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax),
+                            Mathf.Clamp(rb.position.y, boundary.yMin, boundary.yMax));
+        }
     }
 }

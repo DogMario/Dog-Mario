@@ -17,77 +17,105 @@ public class FidgetBossMainScript : MonoBehaviour {
     public GameObject greenLaser;
     public Transform shotSpawn3;
     public float fireRate3 = 8f;
-    public float laserDelay = 1.5f; //laser delay
+    public float laserDelay = 1.5f; 
     public GameObject poisonCloud;
     public Transform shotSpawn4;
     public float fireRate4;
     public GameObject player;
-    //Animator anim;
+    public GameObject smallExplosion;
+    public GameObject backExplosion;
+    public GameObject frontExplosion;
+    Animator anim;
     Quaternion smirk = Quaternion.Euler(0, 0, 0);
     Quaternion thankful = Quaternion.Euler(0, 0, 120);
     Quaternion diao = Quaternion.Euler(0, 0, -120);
     public bool toSmirk;
     public bool toThankful;
     public bool toDiao;
-    private float nextFire1 = 3f;
-    private float nextFire2 = 3f;
-    private float nextFire3 = 3f;
-    private float nextFire4 = 3f;
+    private float nextFire1;
+    private float nextFire2;
+    private float nextFire3;
+    private float nextFire4;
     //private Rigidbody2D rb2D;
     public float diaoStart;
-    
+    public bool isDead;
 
     // Use this for initialization
     void Start () {
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         //rb2D = GetComponent<Rigidbody2D>();
         StartCoroutine(Move());
+        player = GameObject.FindGameObjectWithTag("Player");
+        nextFire1 = nextFire2 = nextFire3 = nextFire4 = Time.time + 3f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //Shooting
-        if (Time.time > nextFire1) {
-            nextFire1 = Time.time + fireRate1;
-            Instantiate(fireShot, shotSpawn1.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
-        }
-        if(toThankful && Time.time > nextFire2) {
-            nextFire2 = Time.time + fireRate2;
-            Instantiate(blueShot, shotSpawn2.position, shotSpawn2.rotation);
-        }
-        if(toDiao && Time.time > diaoStart + laserDelay && Time.time > nextFire3) {
-            nextFire3 = Time.time + fireRate3;
-            Instantiate(greenLaser, shotSpawn3.position, shotSpawn3.rotation);
-        }
-        if (toSmirk && Time.time > nextFire4) {
-            nextFire4 = Time.time + fireRate4;
-            Instantiate(poisonCloud, shotSpawn4.position, shotSpawn4.rotation);
-        }
+        if (!isDead) {
+            //Shooting
+            if (Time.time > nextFire1) {
+                nextFire1 = Time.time + fireRate1;
+                Instantiate(fireShot, shotSpawn1.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            }
+            if (toThankful && Time.time > nextFire2) {
+                nextFire2 = Time.time + fireRate2;
+                Instantiate(blueShot, shotSpawn2.position, shotSpawn2.rotation);
+            }
+            if (toDiao && Time.time > diaoStart + laserDelay && Time.time > nextFire3) {
+                nextFire3 = Time.time + fireRate3;
+                Instantiate(greenLaser, shotSpawn3.position, shotSpawn3.rotation);
+            }
+            if (toSmirk && Time.time > nextFire4) {
+                nextFire4 = Time.time + fireRate4;
+                Instantiate(poisonCloud, shotSpawn4.position, shotSpawn4.rotation);
+            }
 
-        if(hp == threshold) {
-            fireRate1 = 0.12f;
-            fireRate2 = 0.08f;
-            fireRate4 = 0.4f;
-            GetComponentInChildren<SpriteRenderer>().color = new Color(1f,0.52f,0.4f);
-        }
+            if (hp == threshold) {
+                fireRate1 = 0.18f;
+                fireRate2 = 0.12f;
+                fireRate4 = 0.4f;
+                GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0.52f, 0.4f);
+            }
 
-        if (hp <= 0) {
-            Die();
-        }
+            if (hp <= 0) {
+                Die();
+            }
 
-        //Rotating
-        if (toSmirk) {
-            transform.rotation = Quaternion.Lerp(transform.rotation, smirk, Time.deltaTime * speed);
+            //Rotating
+            if (toSmirk) {
+                transform.rotation = Quaternion.Lerp(transform.rotation, smirk, Time.deltaTime * speed);
+            }
+            else if (toThankful) {
+                transform.rotation = Quaternion.Lerp(transform.rotation, thankful, Time.deltaTime * speed);
+            }
+            else if (toDiao) {
+                transform.rotation = Quaternion.Lerp(transform.rotation, diao, Time.deltaTime * speed);
+            }
         }
-        else if (toThankful) {
-            transform.rotation = Quaternion.Lerp(transform.rotation, thankful, Time.deltaTime * speed);
-        }
-        else if (toDiao){
-            transform.rotation = Quaternion.Lerp(transform.rotation, diao, Time.deltaTime * speed);
+        if (isDead) {
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * speed);
         }
     }
 
-    public void Die() {
+    void Die() {
+        isDead = true;
+        GetComponent<RandomVerticalMovement>().speed = 0;
+        StartCoroutine(PlayDeath());
+    }
+
+    IEnumerator PlayDeath() {
+        yield return new WaitForSeconds(2f);
+        anim.SetTrigger("Dead");
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(smallExplosion, shotSpawn3, false);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(smallExplosion, shotSpawn2, false);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(smallExplosion, shotSpawn4, false);
+        yield return new WaitForSeconds(1f);
+        Instantiate(backExplosion, shotSpawn1, false);
+        Instantiate(frontExplosion, shotSpawn1, false);
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
 
