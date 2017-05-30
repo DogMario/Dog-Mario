@@ -17,7 +17,7 @@ public class TextBoxManager : MonoBehaviour {
 
 	public PlayerController player;
 
-	public bool isActive;
+	public bool isActive; // 
 
 	// when dialogue starts, player movement stops
 	public bool stopPlayerMovement;
@@ -47,7 +47,6 @@ public class TextBoxManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		// 
 		if (!isActive)
 			return;
 
@@ -57,20 +56,22 @@ public class TextBoxManager : MonoBehaviour {
 			currentLine += 1;
 		}
 
-		if (currentLine > endAtLine)
-			textBox.SetActive (false);
+		if (currentLine > endAtLine) {
+			DisableTextBox ();
+			isActive = false;
+	}
 	}
 
 	public void EnableTextBox() {
-		textBox.SetActive (true);
+		textBox.SetActive (true); // open dialogue
 
 		if (stopPlayerMovement) 
-			player.canMove = false; 
+			player.canMove = false; // stops player control
 
 	}
 
 	public void DisableTextBox() {
-		textBox.SetActive (false);
-		player.canMove = true;
+		textBox.SetActive (false); // close dialogue
+		player.canMove = true; // let player move
 	}
 }

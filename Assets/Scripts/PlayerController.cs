@@ -8,6 +8,11 @@ public class PlayerController : PhysicsObject {
     public float maxSpeed = 7;
     public float jumpTakeOffSpeed = 20;
 
+	// FOR: Dialogue boxes when chars are talking
+	// SCRIPT: TextBoxManager
+	// control player movement during dialogue
+	public bool canMove;
+
     /*private SpriteRenderer spriteRenderer;
     private GameObject feet;
     private GameObject head;*/
@@ -26,8 +31,13 @@ public class PlayerController : PhysicsObject {
         animator = GetComponent<Animator>();
         bork = GetComponent<AudioSource>();
     }
+		
 
     protected override void ComputeVelocity() {
+		if (!canMove) {
+			return;
+		}
+
         if (!dead) {
             if (!reachedFlag) {
                 Vector2 move = Vector2.zero;
