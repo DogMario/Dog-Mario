@@ -27,7 +27,7 @@ public class PlayerController : PhysicsObject {
         /*spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");*/
-        musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
+        //musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         animator = GetComponent<Animator>();
         bork = GetComponent<AudioSource>();
     }

@@ -64,7 +64,7 @@ public class TextBoxManager : MonoBehaviour {
 
 	public void EnableTextBox() {
 		textBox.SetActive (true); // open dialogue
-
+		isActive = true;
 		if (stopPlayerMovement) 
 			player.canMove = false; // stops player control
 
@@ -73,5 +73,12 @@ public class TextBoxManager : MonoBehaviour {
 	public void DisableTextBox() {
 		textBox.SetActive (false); // close dialogue
 		player.canMove = true; // let player move
+	}
+
+	public void ReloadScript (TextAsset theText) {
+		if (theText != null) {
+			textLines = new string[1];
+			textLines = (theText.text.Split ('\n'));
+		}
 	}
 }
