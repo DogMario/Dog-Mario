@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : PhysicsObject {
 
-    public float maxSpeed = 7;
-    public float jumpTakeOffSpeed = 20;
+    public float maxSpeed = 8;
+    public float jumpTakeOffSpeed = 19;
 
 	// FOR: Dialogue boxes when chars are talking
 	// SCRIPT: TextBoxManager
@@ -27,7 +27,7 @@ public class PlayerController : PhysicsObject {
         /*spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");*/
-        //musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
+        musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         animator = GetComponent<Animator>();
         bork = GetComponent<AudioSource>();
     }
@@ -41,8 +41,8 @@ public class PlayerController : PhysicsObject {
         if (!dead) {
             if (!reachedFlag) {
                 Vector2 move = Vector2.zero;
-
-                move.x = Input.GetAxis("Horizontal");
+                
+                move.x = Input.GetAxisRaw("Horizontal");
 
                 if (Input.GetButtonDown("Jump") && grounded) {
                     velocity.y = jumpTakeOffSpeed;
@@ -50,7 +50,7 @@ public class PlayerController : PhysicsObject {
                 }
                 else if (Input.GetButtonUp("Jump")) {
                     if (velocity.y > 0) {
-                        velocity.y = velocity.y * 0.5f;
+                        velocity.y = velocity.y * 0.4f;
                     }
                 }
 
