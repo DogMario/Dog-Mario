@@ -11,11 +11,14 @@ public class Level3CameraController : MonoBehaviour {
     private float time;
     private float updateTime = 0.5f;
     private Vector3 additionalY;
+    private Transform spawnPoint;
+    private Rigidbody playerrb;
 
     void Start() {
         offset = target.transform.position - transform.position;
         posY = target.transform.position.y;
         time = Time.time;
+        playerrb = target.GetComponent<FollowObjectPosition>().target.GetComponent<Rigidbody>();
     }
 
     void Update() {
@@ -23,6 +26,7 @@ public class Level3CameraController : MonoBehaviour {
             additionalY = target.transform.position.y - posY < 0 ? new Vector3(0, target.transform.position.y - posY, 0) : Vector3.zero;
             //additionalY = target.transform.position.y - posY < 0 ? new Vector3(0, target.transform.position.y - posY, 0) : new Vector3(0,  target.transform.position.y - posY, 0);
             //additionalY = new Vector3(0, (target.transform.position.y - posY), 0);
+            additionalY += new Vector3(0, playerrb.velocity.y > 0 || playerrb.velocity.y < -3? 0:playerrb.velocity.y * 3, 0);
             time = Time.time;
             posY = target.transform.position.y;
         }

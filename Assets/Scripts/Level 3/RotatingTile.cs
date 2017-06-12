@@ -7,11 +7,10 @@ public class RotatingTile : MonoBehaviour {
     public bool clockwise;
     public float rotationSpeed = 100f;
     public char rotateAround = 'Z';
-    private Quaternion startRotation;
 
 	// Use this for initialization
 	void Start () {
-        startRotation = transform.rotation;
+
 	}
 	
 	// Update is called once per frame
