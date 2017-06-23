@@ -23,7 +23,7 @@ public class Level3PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (!dead) {
+        if (!dead && !Level3Goal.passed) {
             float vertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
             rb.AddForce(Camera.main.transform.forward * vertical);
             float horizontal = Input.GetAxis("Horizontal") * movementSpeed * 0.5f * Time.deltaTime;
@@ -37,7 +37,7 @@ public class Level3PlayerController : MonoBehaviour {
 
     IEnumerator PlayDeath() {
         musicManager.playDead();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.2f);
         StaticLives.lives--;
         SceneManager.LoadScene("Level 3"); //reload lv3
     }

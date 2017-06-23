@@ -13,7 +13,9 @@ public class HorizontalInputRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float horizontal = Input.GetAxis("Horizontal") * turningSpeed * Time.deltaTime;
-        transform.Rotate(0, horizontal, 0);
+        if (!Level3Goal.passed) {
+            float horizontal = Input.GetAxis("Horizontal") * turningSpeed * Time.deltaTime;
+            transform.Rotate(0, horizontal, 0);
+        }
     }
 }

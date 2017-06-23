@@ -36,9 +36,6 @@ public class Level2PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if(StaticCheckpoint.checkpoint == 1) {
-            fireRate = 0.25f;
-        }
         if(!dead && (Input.GetButton("Fire1") || Input.GetKey(KeyCode.Space)) && Time.time > nextFire) {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
