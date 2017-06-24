@@ -27,7 +27,9 @@ public class PlayerController : PhysicsObject {
         /*spriteRenderer = GetComponent<SpriteRenderer>();
         feet = GameObject.Find("Feet Collider");
         head = GameObject.Find("Head Collider");*/
-        musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
+        if (GameObject.FindGameObjectWithTag("MusicManager") != null) {
+            musicManager = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
+        }
         animator = GetComponent<Animator>();
         bork = GetComponent<AudioSource>();
     }
@@ -105,7 +107,9 @@ public class PlayerController : PhysicsObject {
 
     IEnumerator PlayDeath() {
         animator.SetTrigger("dead");
-        musicManager.playDead();
+        if (musicManager != null) {
+            musicManager.playDead();
+        }
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
         SceneManager.LoadScene("Level 1"); //load level 1 for now

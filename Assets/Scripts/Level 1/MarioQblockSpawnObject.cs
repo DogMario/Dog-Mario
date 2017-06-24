@@ -14,16 +14,13 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     EdgeCollider2D ec2D;
     AudioSource getHit;
 
-    void Awake() {
-        ec2D = GetComponent<EdgeCollider2D>();
-        if (invisible) {
-            ec2D.isTrigger = false;
-        }
-        getHit = GetComponent<AudioSource>();
-    }
-
 	// Use this for initialization
 	void Start () {
+        ec2D = GetComponent<EdgeCollider2D>();
+        /*if (invisible) {
+            ec2D.isTrigger = false;
+        }*/
+        getHit = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         if (invisible) {
             GetComponent<BoxCollider2D>().enabled = false;
@@ -32,10 +29,11 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     }
 	
     void OnTriggerEnter2D(Collider2D c) {
-        if (c.tag == "DogFeet" || c.tag == "Player") {
-            entered = true;
+        if (c.tag == "DogFeet") {
+            StartCoroutine(EnterAfter(0.1f));
+            StartCoroutine(ExitAfter(0.75f));
         }
-        if (c.tag == "DogHead" && !broken && c.GetComponentInParent<Transform>().transform.position.y < transform.position.y - 1.0f && !entered) {
+        if (c.tag == "DogHead" && !broken && c.GetComponentInParent<Transform>().transform.position.y < transform.position.y - 1f && !entered) {
             GetComponent<BoxCollider2D>().enabled = true;
             getHit.Play();
             anim.SetBool("Invis", false);
@@ -50,9 +48,19 @@ public class MarioQblockSpawnObject : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit2D(Collider2D other) {
+    IEnumerator EnterAfter(float f) {
+        yield return new WaitForSeconds(f);
+        entered = true;
+    }
+
+    IEnumerator ExitAfter(float f) {
+        yield return new WaitForSeconds(f);
+        entered = false;
+    }
+
+    /*void OnTriggerExit2D(Collider2D other) {
         if(other.tag == "DogHead") {
             entered = false;
         }
-    }
+    }*/
 }
