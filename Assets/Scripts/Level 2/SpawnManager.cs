@@ -42,23 +42,11 @@ public class SpawnManager : MonoBehaviour {
 
             go = Instantiate(cabbage, new Vector2(9f, 7f), Quaternion.identity) as GameObject;
             go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, 5.5f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
             go = Instantiate(cabbage, new Vector2(9f, 4f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, 2.5f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, 1f), Quaternion.identity) as GameObject;
             go.SendMessage("CreateWith", 110);
             go = Instantiate(cabbage, new Vector2(9f, 0f), Quaternion.identity) as GameObject;
             go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, -1f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, -2.5f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
             go = Instantiate(cabbage, new Vector2(9f, -4f), Quaternion.identity) as GameObject;
-            go.SendMessage("CreateWith", 110);
-            go = Instantiate(cabbage, new Vector2(9f, -5.5f), Quaternion.identity) as GameObject;
             go.SendMessage("CreateWith", 110);
             go = Instantiate(cabbage, new Vector2(9f, -7f), Quaternion.identity) as GameObject;
             go.SendMessage("CreateWith", 110);

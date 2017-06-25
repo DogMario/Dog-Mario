@@ -116,6 +116,9 @@ public class FidgetBossMainScript : MonoBehaviour {
         Instantiate(backExplosion, shotSpawn1, false);
         Instantiate(frontExplosion, shotSpawn1, false);
         yield return new WaitForSeconds(3f);
+        Level2Clear finish;
+        finish = GameObject.FindGameObjectWithTag("Finish").GetComponent<Level2Clear>();
+        finish.cleared = true;
         Destroy(gameObject);
     }
 

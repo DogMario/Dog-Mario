@@ -7,13 +7,14 @@ public class MusicManager : MonoBehaviour {
     private AudioSource[] audioSources;
     private AudioSource BGM;
     private AudioSource deathClip;
-
+    private AudioSource clearClip;
 
 	// Use this for initialization
 	void Start () {
         audioSources = GetComponents<AudioSource>();
         BGM = audioSources[0];
         deathClip = audioSources[1];
+        clearClip = audioSources[2];
         BGM.Play();
 	}
 	
@@ -21,4 +22,9 @@ public class MusicManager : MonoBehaviour {
         BGM.Stop();
         deathClip.Play();
 	}
+
+    public void playClear() {
+        BGM.Stop();
+        clearClip.Play();
+    }
 }
