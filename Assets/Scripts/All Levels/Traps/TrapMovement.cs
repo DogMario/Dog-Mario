@@ -49,7 +49,6 @@ public class TrapMovement : MonoBehaviour {
             if (left)
             {
                 rb2D.velocity = new Vector2(-speed, 0);
-                Debug.Log("" + speed);
             }
             if (right)
             {
