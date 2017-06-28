@@ -10,18 +10,24 @@ public class MoveWithWaypoints : MonoBehaviour {
     public int currentStartPoint;
     private float startTime, journeyLength;
     private float speed = 14f;
+    private SpriteRenderer mySpriteRenderer;
 
     void Start()
     {
         currentStartPoint = 0;
         SetPoints();
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void SetPoints()
     {
         if (currentStartPoint == 1)
         {
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
             speed = 1f;
+            
         }
 
         if (currentStartPoint == 2)
