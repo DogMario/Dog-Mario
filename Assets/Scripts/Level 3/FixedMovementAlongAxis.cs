@@ -36,13 +36,13 @@ public class FixedMovementAlongAxis : MonoBehaviour {
             case 'X':
                 transform.position += (new Vector3(Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period),0, 0) * speed) * Time.deltaTime;
                 if (playerOn) {
-                    player.transform.position += (new Vector3(Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0, 0) * speed) * Time.deltaTime;
+                    player.transform.position += (new Vector3(Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0, 0) * speed) * 1.2f * Time.deltaTime;
                 }
                 break;
             case 'Z':
                 transform.position += (new Vector3(0,0,Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period)) * speed) * Time.deltaTime;
                 if (playerOn) {
-                    player.transform.position += (new Vector3(0, 0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period)) * speed) * Time.deltaTime;
+                    player.transform.position += (new Vector3(0, 0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period)) * speed) * 1.2f * Time.deltaTime;
                 }
                 break;
             default:
