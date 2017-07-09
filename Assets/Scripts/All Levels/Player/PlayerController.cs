@@ -118,7 +118,7 @@ public class PlayerController : PhysicsObject {
         }
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
-        SceneManager.LoadScene("Level 1"); //load level 1 for now
+        SceneManager.LoadScene(currentSceneName);   //load current level
     }
 
     public bool isGrounded() {

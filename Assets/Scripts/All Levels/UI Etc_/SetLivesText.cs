@@ -8,7 +8,7 @@ public class SetLivesText : MonoBehaviour {
     Text livesText;
 
     void Awake() {
-        livesText = GameObject.Find("LivesText").GetComponent<Text>();
+        livesText = GetComponent<Text>();
     }
 
     // Update is called once per frame
