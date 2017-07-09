@@ -8,6 +8,7 @@ public class Level2Clear : MonoBehaviour {
     private MusicManager musicManager;
     public string sceneName;
     public bool cleared;
+    public GameObject firework;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class Level2Clear : MonoBehaviour {
     void Update() {
         if (cleared) {
             musicManager.playClear();
+            InvokeRepeating("Explode", 0.5f, 0.3f);
             StartCoroutine(WaitAndLoad());
             cleared = false;
         }
@@ -28,5 +30,10 @@ public class Level2Clear : MonoBehaviour {
 
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene(sceneName);
+    }
+
+    void Explode() {
+        Vector3 position = new Vector3(Random.Range(-6, 6),Random.Range(-5, 5), -1);
+        Instantiate(firework, position, new Quaternion(0, 0, 0, 0));
     }
 }

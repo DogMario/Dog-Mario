@@ -36,7 +36,7 @@ public class FixedVerticalMovement : MonoBehaviour {
         transform.position += (new Vector3(0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0) * speed) * Time.deltaTime;
         if (playerOn) {
             Camera.main.transform.position += (new Vector3(0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0) * speed) * Time.deltaTime;
-            player.transform.position += (new Vector3(0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0) * speed) * Time.deltaTime;
+            player.transform.position += (new Vector3(0, Mathf.Cos((Time.time - startTime) * (2 * Mathf.PI) / period), 0) * speed) * 1.2f * Time.deltaTime;
         }
         if (player != null && Mathf.Abs(player.transform.position.x - transform.position.x) < 2f && Mathf.Abs(player.transform.position.z - transform.position.z) < 2f
                             && (player.transform.position.y - transform.position.y) < 1.0f && (player.transform.position.y - transform.position.y) > 0.6f) {
