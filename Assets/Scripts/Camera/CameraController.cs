@@ -11,9 +11,18 @@ public class CameraController : MonoBehaviour {
     public float rightEnd;  //past this x value the camera stops folloing player
     float yValue;    //constant y value for camera in side scrolling levels
 
+    // for level 4 falling mechanics
+    //public FixCamera fixCamera;
+    public string currentSceneName;
+
 	// Use this for initialization
 	void Start () {
-        follow = false;
+        currentSceneName = playerController.getCurrentSceneName();
+        /*if (currentSceneName == "Level 4")
+        {
+            fixCamera = GameObject.Find("Falling camera").GetComponent<FixCamera>();
+        }*/
+            follow = false;
         yValue = 3.5f;
         playerController = player.GetComponent<PlayerController>();
 	}
@@ -23,6 +32,13 @@ public class CameraController : MonoBehaviour {
 		if (player.transform.position.x < leftEnd || player.transform.position.x > rightEnd) {
             follow = false;
         }
+
+        // for level 4 falling mechanics
+        /*if (fixCamera.isGoingToFall)
+        {
+            follow = false;
+        }*/
+
         else {
             follow = true;
         }

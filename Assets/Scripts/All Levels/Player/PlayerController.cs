@@ -21,6 +21,8 @@ public class PlayerController : PhysicsObject {
     private Animator animator;
     private bool reachedFlag;
     private AudioSource bork;
+    private Scene currentScene;
+    private string currentSceneName;
 
     // Use this for initialization
     void Awake() {
@@ -32,6 +34,9 @@ public class PlayerController : PhysicsObject {
         }
         animator = GetComponent<Animator>();
         bork = GetComponent<AudioSource>();
+        
+    currentScene = SceneManager.GetActiveScene();
+        currentSceneName = currentScene.name;
     }
 		
 
@@ -71,7 +76,7 @@ public class PlayerController : PhysicsObject {
 
                 targetVelocity = move * maxSpeed;
 
-                if (transform.position.y < -5.0f) {  //drop to death
+                if (!currentSceneName.Equals("Level 4") && transform.position.y < -5.0f) {  //drop to death
                     Die();
                 }
             }
@@ -88,7 +93,7 @@ public class PlayerController : PhysicsObject {
                     velocity.y = 0;
                     targetVelocity = new Vector2(2f,0f);
                 }
-                if (transform.position.y < -5.0f) {  //drop to death
+                if (!currentSceneName.Equals("Level 4") && (transform.position.y < -5.0f)) {  //drop to death
                     Die();
                 }
             }
@@ -97,6 +102,7 @@ public class PlayerController : PhysicsObject {
 
     public void Die() {
         if (!dead) {
+            Debug.Log("" + currentSceneName + " " + currentScene.name + " " + !currentSceneName.Equals("Level 4"));
             Debug.Log("Player dead!"); //print Dead! in console -> for testing purposes
             dead = true;
             rb2d.velocity.Set(0f, 0f);
@@ -125,5 +131,10 @@ public class PlayerController : PhysicsObject {
 
     public Vector3 getSpeed() {
         return velocity;
+    }
+
+    public string getCurrentSceneName()
+    {
+        return currentSceneName;
     }
 }
