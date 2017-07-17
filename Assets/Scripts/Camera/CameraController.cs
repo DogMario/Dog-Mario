@@ -65,10 +65,10 @@ public class CameraController : MonoBehaviour {
 
     void FixedUpdate() {
         if (follow) {
-            transform.position = Vector3.Lerp(transform.position,new Vector3(player.transform.position.x, yValue, -0.3f), 5 * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position,new Vector3(player.transform.position.x, yValue, transform.position.z), 5 * Time.deltaTime);
         }
         else {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, yValue, -0.3f), 5* Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, yValue, transform.position.z), 5* Time.deltaTime);
         }
     }
 

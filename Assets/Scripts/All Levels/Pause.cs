@@ -13,15 +13,15 @@ public class Pause : MonoBehaviour {
 
     private Animator anim;
     private bool paused;
-    private float pauseDelay = 0.5f;
-    private float thisTime;
+    //private float pauseDelay = 0.5f;
+    //private float thisTime;
     private float originalTimeScale;
-    private float SFXvol;
+    //private float SFXvol;
     private int index = 0;
 
     void Start() {
         anim = GetComponent<Animator>();
-        thisTime = Time.time;
+        //thisTime = Time.time;
         originalTimeScale = Time.timeScale;
         StartCoroutine(PauseRoutine());
     }
@@ -32,12 +32,12 @@ public class Pause : MonoBehaviour {
                 if (!paused) {
                     anim.SetBool("Paused", true);
                     paused = true;
-                    thisTime = Time.time;
+                    //thisTime = Time.time;
                     //pausedSS.TransitionTo(0f);
                     float value;
                     master.GetFloat("MusicVol", out value);
                     master.SetFloat("MusicVol", value - 3.0f);
-                    master.GetFloat("SFXVol", out SFXvol);
+                    //master.GetFloat("SFXVol", out SFXvol);
                     master.SetFloat("SFXVol", 0);
                     Time.timeScale = 0f;
                 }
@@ -45,7 +45,7 @@ public class Pause : MonoBehaviour {
                     anim.SetBool("Paused", false);
                     paused = false;
                     yield return new WaitForSecondsRealtime(0.75f);
-                    thisTime = Time.time;
+                    //thisTime = Time.time;
                     //unpausedSS.TransitionTo(0.3f);
                     float value;
                     master.GetFloat("MusicVol", out value);
