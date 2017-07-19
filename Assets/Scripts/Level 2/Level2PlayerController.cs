@@ -63,6 +63,7 @@ public class Level2PlayerController : MonoBehaviour {
         GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
+        StaticLives.currLost++;
         SceneManager.LoadScene("Level 2"); //reload lv2
     }
 

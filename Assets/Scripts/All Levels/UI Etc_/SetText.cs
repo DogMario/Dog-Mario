@@ -19,5 +19,14 @@ public class SetText : MonoBehaviour {
             text.text = StaticVolume.staticMusicVol.ToString();
         else if (output.Equals("SFX"))
             text.text = StaticVolume.staticSFXVol.ToString();
+        else if (output.Equals("CurrLivesLost"))
+            text.text = "current lives lost\n" + StaticLives.currLost;
+        else if (output.Equals("MinLivesLost")) {
+            text.text = "minimum lives lost\n" + StaticLives.minLost;
+            if (StaticLives.minLost == 0)
+                text.color = new Color32(255, 255, 160, 255);
+            else
+                text.color = new Color32(255, 255, 255, 255);
+        }       
 	}
 }

@@ -9,7 +9,7 @@ public class Level3PlayerController : MonoBehaviour {
     public Transform spawnPoint;
     public float minY = -50;
 
-    private bool dead;
+    public bool dead;
     private Rigidbody rb;
     private float lastY;
     private MusicManager musicManager;
@@ -28,6 +28,9 @@ public class Level3PlayerController : MonoBehaviour {
             rb.AddForce(Camera.main.transform.forward * vertical);
             float horizontal = Input.GetAxis("Horizontal") * movementSpeed * 0.5f * Time.deltaTime;
             rb.AddForce(Camera.main.transform.right * horizontal);
+
+        }
+        if (!dead) {
             if (transform.position.y < minY) {
                 dead = true;
                 StartCoroutine(PlayDeath());
@@ -35,10 +38,11 @@ public class Level3PlayerController : MonoBehaviour {
         }
     }
 
-    IEnumerator PlayDeath() {
+    public IEnumerator PlayDeath() {
         musicManager.playDead();
         yield return new WaitForSeconds(2.2f);
         StaticLives.lives--;
+        StaticLives.currLost++;
         SceneManager.LoadScene("Level 3"); //reload lv3
     }
 

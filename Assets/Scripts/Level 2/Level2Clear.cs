@@ -27,8 +27,15 @@ public class Level2Clear : MonoBehaviour {
     }
 
     IEnumerator WaitAndLoad() {
-
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(0.5f);
+        if (StaticLives.currLost < StaticLives.minLost) {
+            GameObject.FindGameObjectWithTag("CanvasControl").GetComponent<Animator>().SetTrigger("UpdateMin");
+            yield return new WaitForSeconds(0.2f);
+            StaticLives.minLost = StaticLives.currLost;
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
+        }
+        yield return new WaitForSeconds(3.5f);
+        StaticLives.currLost = 0;
         SceneManager.LoadScene(sceneName);
     }
 

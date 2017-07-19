@@ -118,6 +118,7 @@ public class PlayerController : PhysicsObject {
         }
         yield return new WaitForSeconds(1.5f /*if using animation, change to deathAnimation.clip.Length*/);
         StaticLives.lives--;
+        StaticLives.currLost++;
         SceneManager.LoadScene(currentSceneName);   //load current level
     }
 

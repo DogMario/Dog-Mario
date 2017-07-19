@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level3Goal : MonoBehaviour {
 
@@ -26,7 +27,8 @@ public class Level3Goal : MonoBehaviour {
             musicManager.playClear();
             InvokeRepeating("Explode", 0.3f, 0.2f);
             Instantiate(confetti, new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), new Quaternion(0, 0, 0, 0));
-            StartCoroutine(WaitAndQuit());
+            other.transform.GetComponent<Level3PlayerController>().minY = other.transform.position.y - 0.5f;
+            StartCoroutine(WaitAndQuit(other));
         }
     }
 
@@ -35,9 +37,27 @@ public class Level3Goal : MonoBehaviour {
         Instantiate(firework, position, Quaternion.Euler(-90,0,0));
     }
 
-    IEnumerator WaitAndQuit() {
-        yield return new WaitForSeconds(3f);
-
-        Application.Quit();
+    IEnumerator WaitAndQuit(Collider other) {
+        yield return new WaitForSeconds(4f);
+        if (!other.transform.GetComponent<Level3PlayerController>().dead) {
+            if (StaticLives.currLost < StaticLives.minLost) {
+                GameObject.FindGameObjectWithTag("CanvasControl").GetComponent<Animator>().SetTrigger("UpdateMin");
+                yield return new WaitForSeconds(0.2f);
+                StaticLives.minLost = StaticLives.currLost;
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
+                yield return new WaitForSeconds(1.5f);
+                StaticLives.currLost = 0;
+            }
+            else
+                yield return new WaitForSeconds(1.7f);
+            // quit for now
+            #if UNITY_EDITOR
+            // Application.Quit() does not work in the editor so
+            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                          Application.Quit();
+            #endif
+        }
     }
 }
