@@ -16,7 +16,8 @@ public class MusicManager : MonoBehaviour {
         BGM = audioSources[0];
         deathClip = audioSources[1];
         clearClip = audioSources[2];
-        airman = audioSources[3];
+        if(audioSources.Length > 3)
+            airman = audioSources[3];
         BGM.Play();
 	}
 

@@ -12,7 +12,7 @@ public class UpdateCameraPosition : MonoBehaviour {
     public float timer = 1.5f;
     public float beamInterval = 1f;
 
-    private int j = 0;
+    //private int j = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

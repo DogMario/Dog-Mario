@@ -11,12 +11,12 @@ public class MarioQblockSpawnObject : MonoBehaviour {
     bool entered;
     SpriteRenderer[] sprites;
     bool moved;
-    EdgeCollider2D ec2D;
+    //EdgeCollider2D ec2D;
     AudioSource getHit;
 
 	// Use this for initialization
 	void Start () {
-        ec2D = GetComponent<EdgeCollider2D>();
+        //ec2D = GetComponent<EdgeCollider2D>();
         /*if (invisible) {
             ec2D.isTrigger = false;
         }*/
