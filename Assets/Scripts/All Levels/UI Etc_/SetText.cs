@@ -22,7 +22,10 @@ public class SetText : MonoBehaviour {
         else if (output.Equals("CurrLivesLost"))
             text.text = "current lives lost\n" + StaticLives.currLost;
         else if (output.Equals("MinLivesLost")) {
-            text.text = "minimum lives lost\n" + StaticLives.minLost;
+            if (StaticLives.minLost == int.MaxValue)
+                text.text = "minimum lives lost\n" + "--";
+            else
+                text.text = "minimum lives lost\n" + StaticLives.minLost;
             if (StaticLives.minLost == 0)
                 text.color = new Color32(255, 255, 160, 255);
             else

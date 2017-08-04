@@ -35,6 +35,7 @@ public class Door : MonoBehaviour {
             yield return new WaitForSeconds(0.2f);
             StaticLives.minLost = StaticLives.currLost;
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
+            PlayerPrefs.SetInt("Cleared 1", 1);
         }
         yield return new WaitForSeconds(3.5f);
         StaticLives.currLost = 0;

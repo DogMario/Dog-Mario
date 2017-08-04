@@ -13,10 +13,7 @@ public class Pause : MonoBehaviour {
 
     private Animator anim;
     private bool paused;
-    //private float pauseDelay = 0.5f;
-    //private float thisTime;
     private float originalTimeScale;
-    //private float SFXvol;
     private int index = 0;
 
     void Start() {
@@ -32,12 +29,9 @@ public class Pause : MonoBehaviour {
                 if (!paused) {
                     anim.SetBool("Paused", true);
                     paused = true;
-                    //thisTime = Time.time;
-                    //pausedSS.TransitionTo(0f);
                     float value;
                     master.GetFloat("MusicVol", out value);
                     master.SetFloat("MusicVol", value - 3.0f);
-                    //master.GetFloat("SFXVol", out SFXvol);
                     master.SetFloat("SFXVol", 0);
                     Time.timeScale = 0f;
                 }
@@ -45,11 +39,9 @@ public class Pause : MonoBehaviour {
                     anim.SetBool("Paused", false);
                     paused = false;
                     yield return new WaitForSecondsRealtime(0.75f);
-                    //thisTime = Time.time;
-                    //unpausedSS.TransitionTo(0.3f);
                     float value;
                     master.GetFloat("MusicVol", out value);
-                    master.SetFloat("MusicVol", value + 3.0f);
+                    master.SetFloat("MusicVol", value == 0f? 0f : value + 3.0f);
                     index = 0;
                     Time.timeScale = originalTimeScale;
                 }
@@ -78,7 +70,10 @@ public class Pause : MonoBehaviour {
                         index = 0;
                     if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && StaticVolume.staticSFXVol > 0) {
                         StaticVolume.staticSFXVol--;
-                        master.SetFloat("SFXVol", (StaticVolume.staticSFXVol - 5) * 2);
+                        if(StaticVolume.staticSFXVol == 0)
+                            master.SetFloat("SFXVol", 0);
+                        else
+                            master.SetFloat("SFXVol", (StaticVolume.staticSFXVol - 5) * 2);
                     }
                     if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && StaticVolume.staticSFXVol < 10) {
                         StaticVolume.staticSFXVol++;
@@ -105,22 +100,4 @@ public class Pause : MonoBehaviour {
             yield return null;
         }
     }
-
-	// Update is called once per frame
-	/*void Update () {
-        if (Input.GetKey(KeyCode.Escape)) {
-            if (!paused && Time.time > thisTime + pauseDelay) {
-                anim.SetBool("Paused", true);
-                paused = true;
-                thisTime = Time.time;
-                Time.timeScale = 0f;
-            }
-            else if(paused && Time.time > thisTime + pauseDelay) {
-                anim.SetBool("Paused", false);
-                paused = false;
-                thisTime = Time.time;
-                Time.timeScale = originalTimeScale;
-            }
-        }
-	}*/
 }

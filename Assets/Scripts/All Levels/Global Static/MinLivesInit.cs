@@ -11,7 +11,7 @@ public class MinLivesInit : MonoBehaviour {
             StaticLives.minLost = PlayerPrefs.GetInt(SceneManager.GetActiveScene().name);
         }
         else
-            StaticLives.minLost = 999;
+            StaticLives.minLost = int.MaxValue;
 
         if (Input.GetKey(KeyCode.Backslash))    // press \ to delete ALL saved score
             PlayerPrefs.DeleteAll();

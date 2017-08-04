@@ -8,7 +8,8 @@ public class OnCollisionEnter2D : MonoBehaviour {
 
     private void Start()
     {
-        script = this.transform.parent.GetComponent<DisappearingBlocks>();
+        if (script != null)
+            script = this.transform.parent.GetComponent<DisappearingBlocks>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -21,7 +22,8 @@ public class OnCollisionEnter2D : MonoBehaviour {
         else if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Collide");
-            script.enableTrigger();
+            if (script != null)
+                script.enableTrigger();
         }
 
 

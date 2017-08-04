@@ -32,6 +32,7 @@ public class Level2Clear : MonoBehaviour {
             GameObject.FindGameObjectWithTag("CanvasControl").GetComponent<Animator>().SetTrigger("UpdateMin");
             yield return new WaitForSeconds(0.2f);
             StaticLives.minLost = StaticLives.currLost;
+            PlayerPrefs.SetInt("Cleared 2", 1);
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
         }
         yield return new WaitForSeconds(3.5f);
