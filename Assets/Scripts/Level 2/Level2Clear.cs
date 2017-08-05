@@ -32,12 +32,19 @@ public class Level2Clear : MonoBehaviour {
             GameObject.FindGameObjectWithTag("CanvasControl").GetComponent<Animator>().SetTrigger("UpdateMin");
             yield return new WaitForSeconds(0.2f);
             StaticLives.minLost = StaticLives.currLost;
-            PlayerPrefs.SetInt("Cleared 2", 1);
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
         }
+        PlayerPrefs.SetInt("Cleared 2", 1);
         yield return new WaitForSeconds(3.5f);
         StaticLives.currLost = 0;
-        SceneManager.LoadScene(sceneName);
+        if (PlayerPrefs.GetInt("Cleared 3") != 1)
+            SceneManager.LoadScene("Level 3");
+        else if (PlayerPrefs.GetInt("Cleared 4") != 1)
+            SceneManager.LoadScene("Level 4");
+        else if (PlayerPrefs.GetInt("Cleared 1") != 1)
+            SceneManager.LoadScene("Level 1");
+        else
+            SceneManager.LoadScene("Credits");
     }
 
     void Explode() {

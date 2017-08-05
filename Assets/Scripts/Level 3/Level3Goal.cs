@@ -44,22 +44,32 @@ public class Level3Goal : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("CanvasControl").GetComponent<Animator>().SetTrigger("UpdateMin");
                 yield return new WaitForSeconds(0.2f);
                 StaticLives.minLost = StaticLives.currLost;
-                PlayerPrefs.SetInt("Cleared 3", 1);
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
                 yield return new WaitForSeconds(1.5f);
                 StaticLives.currLost = 0;
             }
             else
                 yield return new WaitForSeconds(1.7f);
-            /*// quit for now
-            #if UNITY_EDITOR
-            // Application.Quit() does not work in the editor so
-            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-            UnityEditor.EditorApplication.isPlaying = false;
-            #else
-                          Application.Quit();
-            #endif*/
-            SceneManager.LoadScene("Level 4");
+
+            PlayerPrefs.SetInt("Cleared 3", 1);
+            if (PlayerPrefs.GetInt("Cleared 4") != 1)
+                SceneManager.LoadScene("Level 4");
+            else if (PlayerPrefs.GetInt("Cleared 1") != 1)
+                SceneManager.LoadScene("Level 1");
+            else if (PlayerPrefs.GetInt("Cleared 2") != 1)
+                SceneManager.LoadScene("Level 2");
+            else
+                SceneManager.LoadScene("Credits");
+
+/*
+#if UNITY_EDITOR
+// Application.Quit() does not work in the editor so
+// UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+UnityEditor.EditorApplication.isPlaying = false;
+#else
+              Application.Quit();
+#endif
+*/
         }
     }
 }

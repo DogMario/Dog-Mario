@@ -31,7 +31,7 @@ public class Level2PlayerController : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        nextFire = 0.0f;
+        nextFire = 0.1f;
         //audiosource = GetComponent<AudioSource>(); 
     }
 

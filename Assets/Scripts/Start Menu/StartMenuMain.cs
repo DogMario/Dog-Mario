@@ -26,21 +26,24 @@ public class StartMenuMain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(state == 0) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+            Debug.Log(state);
+
+        if (state == 0) {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) {
                 anim.SetTrigger("Space1");
                 state = 1;
                 lastCommandTime = Time.time;
             }
         }
         if (state == 1) {
-            if (Input.GetKeyDown(KeyCode.Space) && Time.time > lastCommandTime + inputLag) {
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && Time.time > lastCommandTime + inputLag) {
                 anim.SetTrigger("Space2");
                 state = 2;
                 lastCommandTime = Time.time;
             }
         }
-        if(state == 2) {
+        if (state == 2) {
             if (Input.GetAxis("Vertical") > 0.1f && Time.time > lastCommandTime + inputLag) {
                 anim.SetTrigger("Up");
                 lastCommandTime = Time.time;
@@ -66,8 +69,8 @@ public class StartMenuMain : MonoBehaviour {
                 sceneToLoad2 += 1;
                 sceneToLoad2 %= 2;
             }
-            if(Input.GetKeyDown(KeyCode.Space) && Time.time > lastCommandTime + inputLag) {
-                if(sceneToLoad1 == 0) {
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && Time.time > lastCommandTime + inputLag) {
+                if (sceneToLoad1 == 0) {
                     if (sceneToLoad2 == 0)
                         SceneManager.LoadScene("Level 1");
                     else
