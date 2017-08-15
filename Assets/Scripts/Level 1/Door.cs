@@ -36,19 +36,37 @@ public class Door : MonoBehaviour {
             StaticLives.minLost = StaticLives.currLost;
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, StaticLives.minLost);
         }
-        PlayerPrefs.SetInt("Cleared 1", 1);
+
+        if (SceneManager.GetActiveScene().name.Equals("Level 1")) {
+            PlayerPrefs.SetInt("Cleared 1", 1);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals("Level 4")) {
+            PlayerPrefs.SetInt("Cleared 4", 1);
+        }
 
         yield return new WaitForSeconds(3.5f);
 
         StaticLives.currLost = 0;
 
-        if (PlayerPrefs.GetInt("Cleared 2") != 1)
-            SceneManager.LoadScene("Level 2");
-        else if (PlayerPrefs.GetInt("Cleared 3") != 1)
-            SceneManager.LoadScene("Level 3");
-        else if (PlayerPrefs.GetInt("Cleared 4") != 1)
-            SceneManager.LoadScene("Level 4");
-        else
-            SceneManager.LoadScene("Credits");
+        if (SceneManager.GetActiveScene().name.Equals("Level 1")) {
+            if (PlayerPrefs.GetInt("Cleared 2") != 1)
+                SceneManager.LoadScene("Level 2");
+            else if (PlayerPrefs.GetInt("Cleared 3") != 1)
+                SceneManager.LoadScene("Level 3");
+            else if (PlayerPrefs.GetInt("Cleared 4") != 1)
+                SceneManager.LoadScene("Level 4");
+            else
+                SceneManager.LoadScene("Credits");
+        }
+        else if(SceneManager.GetActiveScene().name.Equals("Level 4")) {
+            if (PlayerPrefs.GetInt("Cleared 1") != 1)
+                SceneManager.LoadScene("Level 1");
+            else if (PlayerPrefs.GetInt("Cleared 2") != 1)
+                SceneManager.LoadScene("Level 2");
+            else if (PlayerPrefs.GetInt("Cleared 3") != 1)
+                SceneManager.LoadScene("Level 3");
+            else
+                SceneManager.LoadScene("Credits");
+        }
     }
 }

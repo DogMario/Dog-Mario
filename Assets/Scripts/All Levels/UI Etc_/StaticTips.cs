@@ -13,11 +13,14 @@ public class StaticTips : MonoBehaviour {
         "Do you not have better use for your time?",
         "Remember to stay hydrated",
         "It is actually possible to beat this game",
-        "there is a shortcut for level 3",
+        "There is a shortcut for level 3",
         "The developers have never completed each other's stages",
         "Dogs hate cabbages. True story.",
         "Stop chasing your tail and start chasing your dreams",
         "The lifespan of an average dog is 10-13 years. This dog lives forever",
-        "Don't give up!"
+        "Don't give up!",
+        "Laika was the name of the first dog in space",
+        "The first dog in space died within hours, you killed this one in seconds",
+        "7.8/10 too much cancer - IGN"
     };
 }
