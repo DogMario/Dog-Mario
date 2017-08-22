@@ -15,7 +15,7 @@ public class SpawnOnTriggerEnter : MonoBehaviour {
 	//public float distance;
 
     EnemyController enemyController;
-    AudioSource spawnSound;
+    public AudioSource spawnSound;
 
     void Awake() {
         spawnSound = GetComponent<AudioSource>();
