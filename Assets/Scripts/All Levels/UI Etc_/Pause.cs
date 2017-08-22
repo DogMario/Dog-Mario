@@ -41,7 +41,7 @@ public class Pause : MonoBehaviour {
                     yield return new WaitForSecondsRealtime(0.75f);
                     float value;
                     master.GetFloat("MusicVol", out value);
-                    master.SetFloat("MusicVol", value == 0f? 0f : value + 3.0f);
+                    master.SetFloat("MusicVol", value + 3.0f);
                     index = 0;
                     Time.timeScale = originalTimeScale;
                 }
@@ -53,7 +53,7 @@ public class Pause : MonoBehaviour {
                         index = 1;
                     if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                         index = 2;
-                    if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && StaticVolume.staticMusicVol > 0) {
+                    if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && StaticVolume.staticMusicVol > 1) {
                         StaticVolume.staticMusicVol--;
                         master.SetFloat("MusicVol", (StaticVolume.staticMusicVol - 5) * 2);
                     }
@@ -68,7 +68,7 @@ public class Pause : MonoBehaviour {
                         index = 2;
                     if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                         index = 0;
-                    if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && StaticVolume.staticSFXVol > 0) {
+                    if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && StaticVolume.staticSFXVol > 1) {
                         StaticVolume.staticSFXVol--;
                         if(StaticVolume.staticSFXVol == 0)
                             master.SetFloat("SFXVol", 0);

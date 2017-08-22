@@ -8,7 +8,7 @@ public class StaticTips : MonoBehaviour {
         "Press '\\' at any point to erase progress (but why would you do that?)",
         "\"Fk this game. Fk you. LOL\" - one of our beta testers",
         "Press 1, 2, 3 or 4 to skip to that level immediately",
-        "It took the developer 100 lives to beat level 2 in one sitting",
+        "It took a developer 100 lives to beat level 2 in one sitting",
         "Why are you still playing this game??",
         "Do you not have better use for your time?",
         "Remember to stay hydrated",
@@ -19,8 +19,10 @@ public class StaticTips : MonoBehaviour {
         "Stop chasing your tail and start chasing your dreams",
         "The lifespan of an average dog is 10-13 years. This dog lives forever",
         "Don't give up!",
-        "Laika was the name of the first dog in space",
         "The first dog in space died within hours, you killed this one in seconds",
-        "7.8/10 too much cancer - IGN"
+        "7.8/10 too much cancer - IGN",
+        "Press esc to bring up the pause menu",
+        "I die. I try. I die again.",
+        "This game is easy, as long as you don't die"
     };
 }
